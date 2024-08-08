@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Tree Tracker
+    </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lateef&display=swap">
+    <script src="https://hammerjs.github.io/dist/hammer.min.js">
+    </script>
+    <style>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lateef&display=swap"> <!-- <span style="color:#a2d9ce;">Duplicate link removed</span> -->
+
+ 
+      <title>Blue Background</title>
+      <style>
+      body, html {
+        background-color: #a2d9ce;
+      }
+
+body, html {
+  margin: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #ccccff;
+      }
+
+    header {
+      position: fixed;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      text-align: center;
+      padding: 2px 1px;
+      font-size: 18px;
+      z-index: 1001;
+      border-radius: 10px;
+      margin-left: 1px;
+      margin-right: 2px;
+      margin-top: 2px;
+      }
+
+
+
+.bismillah-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2E8B57;
+  /* Green background color */
+  padding: 10px;
+  border-radius: 15px;
+  /* Rounded corners */
+  border: 1px solid #dcd;
+  box-sizing: border-box;
+  z-index: 1000;
+  /* Ensure it is above the upper panel */
+  margin-bottom: 3px;
+  /* Space below the upper panel */
+      }
+
+
+.bismillah-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  /* Rounded corners for the image */
+  border: 3px solid #ACE087;
+  /* Border around the image */
+      }
+
+
+  
+   
+.upper-panel {
+  background-color: #6D75F1;
+  border-radius: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #dcd;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  gap: 5px;
+      }
+
+  
+    
+
+.total-plants {
+  margin: 0;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 4px;
+  /* Padding around the text */
+  border: 2px solid #373234;
+  border-radius: 10px;
+  background-color: #f0f8ff;
+  /* Light blue background color */
+  color: #373234;
+  text-align: center;
+  display: inline-block;
+  /* Allows the element to resize based on content */
+      }
+
+
+
+.filters select {
+  padding: 0px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0px;
+  border: 3px solid #ACE087;
+  border-radius: 10px;
+  background-color: #7dcea0;
+  color: #373234;
+  flex:  1 auto;
+  display: inline-block; /* Ensure elements display inline */
+}
+
+.save-button { /*Download HTML Button*/
+  background-color: #52be80; /* Background color of the button */
+  color: yellow; /* Text color of the button */
+  border: 3px solid #d35400; /* Border with width, style, and color */
+  border-radius: 15px; /* Optional: rounded corners */
+  padding: 4px 10px; /* Optional: padding inside the button */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  font-size: 14px; /* Optional: font size of the button text */
+  font-weight: bold; /* Optional: bold text */
+  transition: background-color 0.3s, border-color 0.3s; /* Optional: smooth transition for background and border color */
+}
+
+/* Optional: hover effect */
+.save-button:hover {
+  background-color: #2a0d92; /* Darker background color on hover */
+  border-color: #e67e22; /* Change border color on hover */
+}
+
+      
+       /* Overlay to cover the rest of the screen */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 1000; /* Lower than popup-dialog */
+}
+
+/* Popup dialog */
+.popup-dialog {
+  gap: 30px
+   display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 100px;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1001; /* Higher z-index than overlay */
+  flex-wrap: wrap;
+  
+}
+
+/* Central box */
+.popup-content {
+  padding: 20px;
+  border: 10px solid #585858;
+  background-color: #d5dbdb;
+  border-radius: 15px;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  width: 250px;
+  
+}
+
+
+    /* Popup dialog select elements */
+    .popup-content select {
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 25px;
+      border: 1px solid #fdfefe;
+      background-color: #A9A9F5;
+      width: 100%;
+    }
+
+    /* Buttons */
+    .popup-content button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #78281f;
+      color: #fff;
+      cursor: pointer;
+      
+    }
+
+    .popup-content button.cancel-button {
+      background-color: #a9a9a9;
+    }
+
+    .popup-content button + button {
+      margin-left: 10px;
+    }
+
+      
+      
+      
+      
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(15, minmax(300px, 1fr));
+  gap: 10px;
+  padding: 8px;
+  overflow-y: auto;
+  position: relative;
+  padding-top: 0px;
+  width: 100%;
+  align-items: center;
+  /* Remove fixed width and min-height to make it responsive */
+  margin-top: calc(5px + var(--header-height, 0px));
+  width: 400px; /* Fixed width */
+  min-height: 525px; /* Minimum height */
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    width: 100%;
+  }
+}
+
+.cell {
+  border: 5px solid #F4CE14;  /* Thicker border */
+  border-radius: 15px;  /* Rounded corners */
+  padding: 5px;  /* Space inside */
+  background-color: #78ACC7;  /* Background color */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.cell-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.cell-number {
+  background-color: #AEBDCA;
+  padding: 8px; /* padding */
+  border: 2px solid #ACE087;
+  border-radius: 20px;
+  margin: 8px; /* space between the boxes */
+  text-align: center; /* center the text */
+  font-size: 14px;
+  font-weight: bold;
+}
+.serial-number {
+    background-color: #AEBDCA;
+    padding:2px; /* padding */
+  	border: 3px solid #ACE087;
+ 	border-radius: 10px;
+    margin: 0px; /* space between the boxes */
+    flex: 1; /* make them take equal space */
+    text-align: center; /* center the text */
+    font-size: 12px;
+  	
+}
+ .current-date {
+    background-color: #AEBDCA;
+    padding: 2px; /* padding */
+  	border: 2px solid #ACE087;
+ 	border-radius: 10px;
+    margin: 5px; /* space between the boxes */
+    flex: 1; /* make them take equal space */
+    text-align: center; /* center the text */
+    font-size: 12px; 
+}
+      
+.cell-number {
+    font-weight: Bold;
+}
+
+.cell-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0px;
+  
+}
+
+
+
+.image-area {
+  width: 100%; /* Ensure it uses full width available */
+  max-width: 960x; /* Maximum width adjusted */
+  height: auto; /* Adjust height automatically */
+  aspect-ratio: 4 / 3; /* Maintain 4:3 aspect ratio */
+  border-radius: 15px;
+  background-color: #C1F7C1;
+  border: 1px solid lime;
+  margin: auto; /* Center horizontally */
+  display: block; /* Ensure it displays as a block element */
+  overflow: hidden; /* Ensures no overflow beyond the rounded corners */
+  max-width: 280px; /* Adjust max-width to your desired size */
+  height: 373px; /* 280px * 4/3 to maintain 3:4 aspect ratio */
+}
+
+.image-area img {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* Ensures the image covers the entire container */
+  border-radius: 15px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  margin: 3px 0px;
+}
+
+.buttons button {
+  background-color: white;
+  color: #6482AD;
+  border: 2px solid #91fa03; /* Existing border */
+  border-radius: 30px;
+  padding: 5px;
+  margin: 3px 10px;
+  cursor: pointer;
+  position: relative; /* Necessary for absolute positioning of the inner border */
+}
+
+.buttons button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 0.1px solid yellow; /* Add the 1px yellow border */
+  border-radius: inherit; /* Inherit border-radius from the button */
+}
+
+.buttons button:hover {
+  background-color: #252A34;
+}
+
+    
+ .fullscreen-image-container { /* Assuming a parent container */
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.fullscreen-image {
+  z-index: 1001;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: rgba(0, 0, 0, 0.8); /* Adjust opacity as needed */
+}
+
+/*Close button for full screen image*/
+/* Close button for full-screen image */
+.close-btn {
+  z-index: 1002;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  background-color: #ffff00; /* Yellow background */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  animation: blink 1s infinite;
+  font-weight: bold;
+  color: #006400; /* Dark green text */
+  pointer-events: auto; /* Ensure the button is clickable */
+}
+
+
+
+/* Add hover effect for better UX */
+.close-btn:hover {
+  background-color: #dfdf19; /* Darker red on hover */
+}
+
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.05;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+
+
+.save-dialog button, .popup-dialog button {
+  margin: 1px;
+  padding: 10px 20px;
+  cursor: pointer;
+  Border-radius:15px;
+    
+}
+      
+  .variety-status-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Adjust as needed */
+  align-items: center;
+}
+
+.variety-display, .status-display {  
+  border: 2px solid #effa13;
+  border-radius: 10px;
+  border: 2px solid #ACE087;
+  text-align: center;
+  padding: 2px;
+  gap: 8px; /* Add a 3px gap between elements */
+  background-color: #AEBDCA;
+  width: 120px; /* Adjust width as needed */  
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+  flex: 1; /* make them take equal space */
+  text-align: center; /* center the text */
+  font-size: 10px;
+}
+     </style>
+</head>
+<body>
+  
+  
+
+  
+   <!-- Popup Overlay -->
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- Popup Dialog -->
+  <div class="popup-dialog" id="popupDialog">
+    <div class="popup-content">
+      <div>
+        <label for="varietySelect">Select Variety:</label>
+        <select id="varietySelect">
+          <option value="">Select Variety</option>
+          <option value="Gala">Gala</option>
+          <option value="Golden">Golden</option>
+          <option value="Granny Smith">Granny Smith</option>
+          <option value="Not Known">Not Known</option>
+          <option value="Unknown">Unknown</option>
+          <option value="Jeromine">Jeromine</option>
+          <option value="King Roat">King Roat</option>
+          <option value="Gala Scarlet">Gala Scarlet</option>
+          <option value="Red Velox">Red Velox</option>
+          <option value="Scarlet Spur-II">Scarlet Spur-II</option>
+          <option value="Super Chief">Super Chief</option>
+          <option value="Redlum Gala">Redlum Gala</option>
+          <option value="Auvi Fuji">Auvi Fuji</option>
+        </select>
+      </div>
+      <div>
+        <label for="statusSelect">Select Status:</label>
+        <select id="statusSelect">
+          <option value="">Select Status</option>
+          <option value="Two Plants">Two Plants</option>
+          <option value="Not grafted">Not grafted</option>
+          <option value="Change Graft">Change Graft</option>
+          <option value="Broken">Broken</option>
+          <option value="Weak Plant">Weak Plant</option>
+          <option value="Good Variety">Good Variety</option>
+          <option value="Diseases">Diseases</option>
+          <option value="No Plant">No Plant</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <button onclick="applySelection()">Apply</button>
+      <button class="cancel-button" onclick="hidePopup()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    // Functions to show and hide the popup
+    function showPopup() {
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('popupDialog').style.display = 'flex';
+    }
+
+    function hidePopup() {
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('popupDialog').style.display = 'none';
+    }
+
+    // Function to handle apply button click
+    function applySelection() {
+      // Handle the apply action here
+      hidePopup();
+    }
+
+    // Initial hiding of popup and overlay
+    hidePopup();
+    </script>
+
+    
+   
+
+ 
+  
+
+    
+  <header>
+    <div class="bismillah-image-container"> 
+      <img src="data:image/png;base64,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"bismillah-image>
+  </div>
+         
+    
+    <div class="upper-panel">
+        <div class="total-plants">Total number of plants: <span id="totalPlants">0</span></div>
+        <div class="filters">
+            <select id="filterVariety" onchange="filterGrid()">
+                <option value="">Filter by Variety</option>
+  <option value="Gala">Gala</option>
+  <option value="Golden">Golden</option>
+  <option value="Granny Smith">Granny Smith</option>
+  <option value="Not Known">Not Known</option>
+  <option value="Unknown">Unknown</option>
+  <option value="Jeromine">Jeromine</option>
+  <option value="King Roat">King Roat</option>
+  <option value="Gala Scarlet">Gala Scarlet</option>
+  <option value="Red Velox">Red Velox</option>
+  <option value="Scarlet Spur-II">Scarlet Spur-II</option>
+  <option value="Super Chief">Super Chief</option>
+  <option value="Redlum Gala">Redlum Gala</option>
+  <option value="Auvi Fuji">Auvi Fuji</option>
+            </select>
+            <select id="filterStatus" onchange="filterGrid()">
+                <option value="">Filter by Status</option>
+                <option value="Two Plants">Two Plants</option>
+                <option value="Not grafted">Not grafted</option>
+                <option value="Change Graft">Change Graft</option>
+                <option value="Broken">Broken</option>
+          		<option value="Weak Plant">Weak Plant</option>
+                <option value="Good Variety">Good Variety</option>
+                <option value="Diseases">Diseases</option>
+             	<option value="No Plant">No Plant</option>
+               <option value="Other">Other</option>
+            </div>
+            </select>
+        
+       
+        <button class="save-button" onclick="downloadHTML()">Download </button>
+      
+      </header>
+      
+    
+    <div class="grid-container" id="gridContainer">
+        <!-- Grid cells will be generated by JavaScript -->
+    </div>
+  
+  
+    <script>
+/*To maintain a gap between the header and the grid*/
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const header = document.querySelector('header');
+      if (header) {
+        const headerHeight = header.offsetHeight;
+        document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      const header = document.querySelector('header');
+      if (header) {
+        const headerHeight = header.offsetHeight;
+        document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
+      }
+    });
+  </script>
+  
+
+    
+    <!-- Hidden inputs to store the last serial number and total plants count -->
+    <input type="hidden" id="lastSerialNumber" value="0">
+    <input type="hidden" id="totalPlantsCount" value="0">
+
+    <script>
+      const images = document.querySelectorAll('.image-area img');
+
+images.forEach(image => {
+  image.addEventListener('dblclick', handleImageZoom);
+});
+
+        const varieties = ["Gala", "Golden", "Granny Smith", "Fuji", "Honeycrisp"];
+        const statuses = ["Two Plants", "Not grafted", "Change Graft","Weak Plant", "Good Variety", "Diseases", "No Plant", "Other"];
+        let totalPlants = parseInt(document.getElementById("totalPlantsCount").value);
+        let lastSerialNumber = parseInt(document.getElementById("lastSerialNumber").value);
+      
+     document.addEventListener("DOMContentLoaded", () => {
+    const gridContainer = document.getElementById("gridContainer");
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    for (let row = 0; row < 15; row++) {
+        for (let col = 0; col < 15; col++) {
+            const cell = document.createElement("div");
+            cell.className = "cell";
+            cell.dataset.serial = "";
+            cell.dataset.index = `${row}-${col}`; // Add unique index
+
+            const cellInfo = document.createElement("div");
+            cellInfo.className = "cell-info";
+            cellInfo.innerHTML = `
+                <div class="cell-number">${alphabet[row]}${col + 1}</div>
+                <div class="serial-number"></div>
+                <div class="current-date"></div>
+            `;
+
+            const imageArea = document.createElement("div");
+            imageArea.className = "image-area";
+            imageArea.innerHTML = '<img style="display:none;">';
+
+            const buttons = document.createElement("div");
+            buttons.className = "buttons";
+            buttons.innerHTML = `
+                <button onclick="captureImage(this)">📷</button>
+                <button onclick="uploadImage(this)">🖼️</button>
+                <button onclick="fullscreenImage(this)">🔎</button>	
+				<button onclick="saveImage(this)">⬇️</button>
+                <button onclick="deleteImage(this)">🗑️</button>
+            `;
+
+            const varietyStatusDisplay = document.createElement("div");
+            varietyStatusDisplay.className = "variety-status-display";
+            varietyStatusDisplay.innerHTML = `
+                <div class="variety-display"></div>
+                <div class="status-display"></div>
+            `;
+
+            cell.appendChild(cellInfo);
+            cell.appendChild(imageArea);
+            cell.appendChild(buttons);
+            cell.appendChild(varietyStatusDisplay);
+            gridContainer.appendChild(cell);
+        }
+    }
+    updateTotalPlants();
+});
+
+      function handleImageZoom(event) {
+  const image = event.target;
+  const hammer = new Hammer(image);
+
+  hammer.get('pinch').set({ enable: true });
+
+  hammer.on('pinch', (ev) => {
+    const scale = ev.scale;
+    image.style.transform = `scale(${scale})`;
+  });
+}
+
+        function updateTotalPlants() {
+            const totalPlantsElem = document.getElementById("totalPlants");
+            totalPlantsElem.innerText = totalPlants;
+            document.getElementById("totalPlantsCount").value = totalPlants; // Update hidden input value
+        }
+
+        function captureImage(button) {
+            const cell = button.closest(".cell");
+            const fileInput = document.createElement("input");
+          
+           showPopup(cell);
+          fileInput.type = "file";
+            fileInput.accept = "image/*";
+            fileInput.capture = "environment";
+            fileInput.onchange = (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = cell.querySelector(".image-area img");
+                        img.src = e.target.result;
+                        img.style.display = "block";
+                        assignSerialNumber(cell);
+                        promptDropdowns(cell);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            fileInput.click();
+        }
+
+       function uploadImage(button) {
+  const cell = button.closest('.cell');
+  const imageArea = cell.querySelector('.image-area');
+  const img = imageArea.querySelector('img');
+
+  const fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.accept = 'image/*';
+
+  fileInput.onchange = (event) => {
+    const file = event.target.files[0];   
+
+
+    if (file) {
+      // Check if an image is already present and prompt for replacement
+      if (img.src && img.src !== '') {
+        const shouldReplace = confirm('An image is already uploaded. Do you want to replace it?');
+        if (!shouldReplace) return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        img.src = e.target.result;
+        img.style.display = 'block';
+        assignSerialNumber(cell); // Assuming this function exists
+        showPopup(cell); // Assuming this function exists
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  fileInput.click();
+}
+      
+      
+     
+      
+    function fullscreenImage(button) {
+  const cell = button.closest('.cell');
+  const image = cell ? cell.querySelector('.image-area img') : null;
+
+  // Check if the image exists
+  if (image) {
+    // Remove any existing fullscreen image
+    const existingFullscreenImage = document.querySelector('.fullscreen-image');
+    if (existingFullscreenImage) {
+      document.body.removeChild(existingFullscreenImage);
+    }
+
+    // Remove any existing close button
+    const existingCloseButton = document.querySelector('.close-btn');
+    if (existingCloseButton) {
+      document.body.removeChild(existingCloseButton);
+    }
+
+    // Create a full-screen image container
+    const fullscreenImage = document.createElement('img');
+    fullscreenImage.src = image.src;
+    fullscreenImage.classList.add('fullscreen-image');
+    fullscreenImage.style.position = 'fixed';
+    fullscreenImage.style.top = '0';
+    fullscreenImage.style.left = '0';
+    fullscreenImage.style.width = '100%';
+    fullscreenImage.style.height = '100%';
+    fullscreenImage.style.objectFit = 'contain';
+    fullscreenImage.style.zIndex = '1002'; // Ensure it's in front of everything else
+    document.body.appendChild(fullscreenImage);
+
+    // Create a close button
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.classList.add('close-btn');
+    closeButton.style.position = 'fixed';
+    closeButton.style.top = '20px';
+    closeButton.style.right = '20px';
+    closeButton.style.zIndex = '1003'; // Ensure it's above the image
+    closeButton.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    closeButton.style.color = '#fff';
+    closeButton.style.border = 'none';
+    closeButton.style.padding = '10px';
+    closeButton.style.borderRadius = '5px';
+    closeButton.style.cursor = 'pointer';
+    document.body.appendChild(closeButton);
+
+    // Add click event to the close button
+    closeButton.addEventListener('click', () => {
+      document.body.removeChild(fullscreenImage);
+      document.body.removeChild(closeButton);
+    });
+
+    // Add touch events for zooming and panning
+    let initialScale = 1;
+    let scale = 1;
+    let startX = 0;
+    let startY = 0;
+    const minScale = 0.1; // Minimum scale to trigger closing
+
+    fullscreenImage.addEventListener('touchstart', (event) => {
+      if (event.touches.length === 1) {
+        startX = event.touches[0].clientX;
+        startY = event.touches[0].clientY;
+      } else if (event.touches.length > 1) {
+        const distance = Math.hypot(
+          event.touches[0].clientX - event.touches[1].clientX,
+          event.touches[0].clientY - event.touches[1].clientY
+        );
+        initialScale = scale;
+      }
+    });
+
+    fullscreenImage.addEventListener('touchmove', (event) => {
+      if (event.touches.length === 1) {
+        const deltaX = event.touches[0].clientX - startX;
+        const deltaY = event.touches[0].clientY - startY;
+        fullscreenImage.style.transform = `scale(${scale}) translate(${deltaX}px, ${deltaY}px)`;
+      } else if (event.touches.length > 1) {
+        const distance = Math.hypot(
+          event.touches[0].clientX - event.touches[1].clientX,
+          event.touches[0].clientY - event.touches[1].clientY
+        );
+        const initialDistance = Math.hypot(
+          startX - event.touches[1].clientX,
+          startY - event.touches[1].clientY
+        );
+        scale = initialScale * (distance / initialDistance);
+        fullscreenImage.style.transform = `scale(${scale})`;
+
+        // Close if scaled down too much
+        if (scale < minScale) {
+          document.body.removeChild(fullscreenImage);
+          document.body.removeChild(closeButton);
+        }
+      }
+    });
+
+    fullscreenImage.addEventListener('touchend', () => {
+      // Optional: Update any logic if needed
+    });
+  } else {
+    // Alert if no image is found
+    alert('No image found in this cell.');
+  }
+}
+
+
+      
+      
+function saveImage(button) {
+    const cell = button.closest('.cell');
+    const img = cell.querySelector('.image-area img');
+
+    if (img.src) {
+        const link = document.createElement('a');
+        link.href = img.src;
+        link.download = 'downloaded-image.png'; // Name of the downloaded image
+        link.click();
+    } else {
+        alert('No image to save!');
+    }
+}
+
+      
+    function deleteImage(button) {
+  if (confirm("Are you sure you want to delete this image?")) {
+    const cell = button.closest(".cell");
+    const img = cell.querySelector(".image-area img");
+
+    if (img) {
+      img.src = "";
+      img.style.display = "none";
+    }
+
+    // Clear all data associated with the cell
+    cell.dataset.serial = "";
+    cell.querySelector(".serial-number").innerText = "";
+    cell.querySelector(".current-date").innerText = "";
+    cell.dataset.variety = "";
+    cell.dataset.status = "";
+
+    // Update variety and status displays (if applicable)
+    const varietyDisplay = cell.querySelector(".variety-display");
+    const statusDisplay = cell.querySelector(".status-display");
+    if (varietyDisplay) {
+      varietyDisplay.innerText = "";
+    }
+    if (statusDisplay) {
+      statusDisplay.innerText = "";
+    }
+
+    totalPlants--;
+    updateTotalPlants();
+  }
+}
+
+
+        function assignSerialNumber(cell) {
+            if (!cell.dataset.serial) {
+                lastSerialNumber++;
+                cell.dataset.serial = lastSerialNumber;
+                cell.querySelector(".serial-number").innerText = `Serial: ${lastSerialNumber}`;
+                cell.querySelector(".current-date").innerText = new Date().toLocaleDateString();
+                totalPlants++;
+                updateTotalPlants();
+                document.getElementById("lastSerialNumber").value = lastSerialNumber; // Update hidden input value
+            }
+        }
+
+        function removeSerialNumber(cell) {
+            if (cell.dataset.serial) {
+                cell.dataset.serial = "";
+                cell.querySelector(".serial-number").innerText = "";
+                cell.querySelector(".current-date").innerText = "";
+                totalPlants--;
+                updateTotalPlants();
+            }
+        }
+
+        function updateVariety(select) {
+            const cell = select.closest(".cell");
+            const variety = select.value;
+            cell.dataset.variety = variety;
+        }
+
+        function updateStatus(select) {
+            const cell = select.closest(".cell");
+            const status = select.value;
+            cell.dataset.status = status;
+        }
+
+        function clearDropdowns(cell) {
+            cell.querySelector("select").value = "";
+            cell.dataset.variety = "";
+            cell.dataset.status = "";
+        }
+
+        function promptDropdowns(cell) {
+            const varietySelect = cell.querySelector(".dropdowns select:nth-child(1)");
+            const statusSelect = cell.querySelector(".dropdowns select:nth-child(2)");
+            if (!cell.dataset.variety) {
+                setTimeout(() => varietySelect.focus(), 0);
+            } else if (!cell.dataset.status) {
+                setTimeout(() => statusSelect.focus(), 0);
+            }
+        }
+
+        function filterGrid() {
+            const varietyFilter = document.getElementById("filterVariety").value;
+            const statusFilter = document.getElementById("filterStatus").value;
+            const cells = document.querySelectorAll(".cell");
+
+            cells.forEach(cell => {
+                const variety = cell.dataset.variety || "";
+                const status = cell.dataset.status || "";
+                const matchesVariety = !varietyFilter || variety === varietyFilter;
+                const matchesStatus = !statusFilter || status === statusFilter;
+                cell.style.display = matchesVariety && matchesStatus ? "" : "none";
+            });
+        }
+
+        function showSaveDialog() {
+            document.getElementById("saveDialog").style.display = "block";
+        }
+
+        function hideSaveDialog() {
+            document.getElementById("saveDialog").style.display = "none";
+        }
+
+     // Corrected JavaScript functions
+
+function showPopup(cell) {
+    const popupDialog = document.getElementById("popupDialog");
+    popupDialog.style.display = "block"; // Show the popup
+    // Optionally set data attributes or content here based on cell
+}
+
+function hidePopup() {
+    const popupDialog = document.getElementById("popupDialog");
+    popupDialog.style.display = "none"; // Hide the popup
+}
+
+function applySelection() {
+    const variety = document.getElementById("varietySelect").value;
+    const status = document.getElementById("statusSelect").value;
+    // Apply the selection to the relevant cell or content
+    hidePopup(); // Hide the popup after applying selection
+}
+
+
+function applySelection() {
+    const dialog = document.getElementById("popupDialog");
+    const cellIndex = dialog.dataset.cellIndex; // Retrieve the cell index
+    const varietySelect = document.getElementById("varietySelect");
+    const statusSelect = document.getElementById("statusSelect");
+
+    const cell = document.querySelector(`.cell[data-index="${cellIndex}"]`);
+    if (cell) {
+        // Update the cell's dataset with selected values
+        cell.dataset.variety = varietySelect.value;
+        cell.dataset.status = statusSelect.value;
+
+        // Update the cell display with the selected values
+        const varietyDisplay = cell.querySelector(".variety-display");
+        const statusDisplay = cell.querySelector(".status-display");
+
+        if (varietyDisplay) {
+            varietyDisplay.innerText = `Variety: ${varietySelect.value}`;
+        }
+        if (statusDisplay) {
+            statusDisplay.innerText = `Status: ${statusSelect.value}`;
+        }
+    }
+
+    hidePopup();
+}
+
+       
+  
+
+
+
+function getGridData() {
+    const cells = document.querySelectorAll(".cell");
+    const data = [];
+    cells.forEach(cell => {
+        if (cell.dataset.serial) {
+            data.push({
+                cell: cell.querySelector(".cell-number").innerText,
+                variety: cell.dataset.variety,
+                status: cell.dataset.status
+            });
+        }
+    });
+    return data;
+}
+
+
+
+function downloadHTML() {
+    // Create a date element
+    const dateElement = document.createElement("div");
+    
+    // Format the date as DD-MM-YY
+    const currentDate = new Date();
+    const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${currentDate.getFullYear().toString().slice(-2)}`;
+    dateElement.textContent = `Downloaded on: ${formattedDate}`;
+    
+    // Style the date element
+    dateElement.style.position = 'fixed';
+    dateElement.style.bottom = '10px';
+    dateElement.style.right = '10px';
+    dateElement.style.backgroundColor = '#7dcea0'; // 
+    dateElement.style.padding = '5px';
+    dateElement.style.border = '2px solid #5b2c6f'; // 
+    dateElement.style.borderRadius = '15px'; 
+
+    // Add the date element to the document
+    document.body.appendChild(dateElement);
+
+    // Create the downloadable HTML file
+    const a = document.createElement("a");
+    const file = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(file);
+    
+    a.href = url;
+    a.download = 'Apple_Tree_Tracker.html';
+    a.click();
+
+    // Clean up
+    URL.revokeObjectURL(url);
+    document.body.removeChild(dateElement);
+}
+
+    </script>
+  <script>
+    // JavaScript code
+    function showPopup(cell) {
+    const dialog = document.getElementById("popupDialog");
+    const varietySelect = document.getElementById("varietySelect");
+    const statusSelect = document.getElementById("statusSelect");
+
+    // Reset popup values
+    varietySelect.value = cell.dataset.variety || "";
+    statusSelect.value = cell.dataset.status || "";
+
+    dialog.style.display = "block";
+    dialog.dataset.cellIndex = cell.dataset.index; // Store the cell index
+}
+
+    function hidePopup() {
+        document.getElementById("popupDialog").style.display = "none";
+    }
+
+    function applySelection() {
+        const dialog = document.getElementById("popupDialog");
+        const cellIndex = dialog.dataset.cellIndex; // Retrieve the cell index
+        const varietySelect = document.getElementById("varietySelect");
+        const statusSelect = document.getElementById("statusSelect");
+
+        const cell = document.querySelector(`.cell[data-index="${cellIndex}"]`);
+        if (cell) {
+            // Update the cell's dataset with selected values
+            cell.dataset.variety = varietySelect.value;
+            cell.dataset.status = statusSelect.value;
+
+            // Update the cell display with the selected values
+            const varietyDisplay = cell.querySelector(".variety-display");
+            const statusDisplay = cell.querySelector(".status-display");
+
+            if (varietyDisplay) {
+                varietyDisplay.innerText = `Variety: ${varietySelect.value}`;
+            }
+            if (statusDisplay) {
+                statusDisplay.innerText = `Status: ${statusSelect.value}`;
+            }
+        }
+
+        hidePopup();
+    }
+  
+</script>
+
+</body>
+</html>
